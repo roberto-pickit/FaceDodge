@@ -5,8 +5,9 @@ from EyeTracking.pyimagesearch.eyetracker import EyeTracker
 import cv2
 
 import random
-from Game.gamecomponents.gamecomp import Obstacle, Benefit, Square, Score, faceTracking
-from Game.gamecomponents.constants import *
+from gamecomponents.gamecomp import Obstacle, Benefit, Square, Score
+from gamecomponents.visioncomp import faceTracking
+from gamecomponents.constants import *
 
 
 # Initialize Pygame
@@ -34,6 +35,7 @@ while True:
     screen.fill(WHITE)
     square.move(dx)
     square.draw(screen)
+    score.checkRecord()
     score.draw(screen)
     if random.randint(0, 50) < 3 & obst_move>0 :  # 2% chance to create a new obstacle every frame
         obstacles.append(Obstacle(random.randint(0, WIDTH - OBSTACLE_WIDTH), -OBSTACLE_HEIGHT, 

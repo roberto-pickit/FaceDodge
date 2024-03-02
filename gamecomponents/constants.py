@@ -10,3 +10,4 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 GOLD = (255, 215, 0)
+HIGHSCORE_PATH = 'gamecomponents/highscore.txt'

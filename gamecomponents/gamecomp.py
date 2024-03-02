@@ -1,17 +1,5 @@
 import pygame
-from Game.gamecomponents.constants import *
-#Vision stuff
-# import the necessary packages
-from EyeTracking.pyimagesearch.eyetracker import EyeTracker
-from EyeTracking.pyimagesearch import imutils
-import cv2
-
-
-# Initialize camera
-
-# construct the eye tracker
-et = EyeTracker("EyeTracking/cascades/haarcascade_frontalface_default.xml","EyeTracking/cascades/haarcascade_eye.xml")
-
+from gamecomponents.constants import *
 
 # Square class
 class Square:
@@ -65,10 +53,18 @@ class Score:
         self.num_lives = num_lives
         self.num_obst_survived= num_obst_survived
         self.myfont = pygame.font.SysFont(None, 30)
+        try:
+            with open(HIGHSCORE_PATH, 'r') as f:
+                high_score = int(f.read())
+        except FileNotFoundError:
+            high_score = 0  # If the file doesn't exist yet, start with a high score of 0.
+        self.highestscore= high_score
 
 
     def draw(self, screen):
-        textsurface = self.myfont.render('Score: ' + str(self.num_obst_survived)+' Lives: ' + str(self.num_lives), False, (0, 0, 0))
+        textsurface = self.myfont.render('Score: ' + str(self.num_obst_survived)+' Lives: ' + str(self.num_lives) + 
+                                         '                                   Record: ' +str(self.highestscore),
+                                         False, (0, 0, 0))
         screen.blit(textsurface, (50, 50))  # adjust coordinates as needed
         
     def updateScore(self, obst, death=0):
@@ -77,33 +73,13 @@ class Score:
         if obst<0:
             self.num_obst_survived=0
 
-
-def faceTracking(camera):
-        (grabbed, frame) = camera.read()
-        if not grabbed:
-            print("Unable to access camera")
-            exit(1)
-        frame = imutils.resize(frame, width = 300) 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        # detect faces and eyes in the image
-        detections = et.track(gray)
-        rectface= detections[0]
-        if len(rectface)!=0: 
-            obst_move=OBST_SPEED
-            cv2.rectangle(frame, (rectface[0], rectface[1]), (rectface[2], rectface[3]), (0, 255, 0), 2)
-            if (rectface[0]+rectface[2]/2>270):
-                dx = -SPEED*2
-            elif(rectface[0]+rectface[2]/2>220):
-                dx = -SPEED
-            elif(rectface[0]+rectface[2]/2<130):
-                dx = SPEED*2
-            elif (rectface[0]+rectface[2]/2<180):
-                dx = SPEED
-            else:
-                dx= 0
-        else:
-            obst_move= 0
-            dx=0
-        frame = cv2.flip(frame, 1)
-        cv2.imshow("Video streaming", frame)
-        return dx, obst_move
+    def checkRecord(self):
+        try:
+            with open(HIGHSCORE_PATH, 'r') as f:
+                high_score = int(f.read())
+        except FileNotFoundError:
+            high_score = 0  # If the file doesn't exist yet, start with a high score of 0.
+        if high_score<self.num_obst_survived:
+            self.highestscore=self.num_obst_survived
+            with open(HIGHSCORE_PATH, 'w') as f:
+                f.write(str(self.num_obst_survived))

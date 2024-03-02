@@ -1,5 +1,11 @@
-# my_repo
-my first test repository by Roberto La Commare
-## Goal of this project
+# Face-dodge
 
-The goal is to make my first pythhon project. This will teach me how to deal with medium size project and workspace. 
+This is a litte game that use a facetracking alghoritm from openCV. 
+
+## How to play
+
+Start the game with python3 main.py
+Move your face right and left to move the red square. 
+Try to avoid the blue rectangles. If they touch the square you lose 1 live.
+Increase the live by touching the yellow cirles.
+Let's see if you can beat my record!
