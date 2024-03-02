@@ -87,8 +87,8 @@ def faceTracking(camera):
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # detect faces and eyes in the image
         detections = et.track(gray)
-
-        rectface= detections["face"]
+        print(detections)
+        rectface= detections[0]
         if len(rectface)!=0: 
             obst_move=OBST_SPEED
             cv2.rectangle(frame, (rectface[0], rectface[1]), (rectface[2], rectface[3]), (0, 255, 0), 2)
