@@ -37,10 +37,10 @@ while True:
     square.draw(screen)
     score.checkRecord()
     score.draw(screen)
-    if random.randint(0, 50) < 3 & obst_move>0 :  # 2% chance to create a new obstacle every frame
+    if random.randint(0, 50) < 3 & obst_move>0 :  # 6% chance to create a new obstacle every frame
         obstacles.append(Obstacle(random.randint(0, WIDTH - OBSTACLE_WIDTH), -OBSTACLE_HEIGHT, 
                                   OBSTACLE_WIDTH*random.randint(10,500)/100, OBSTACLE_HEIGHT,random.randint(1,3)))
-    if random.randint(0, 500) < 2 & obst_move>0 :  # 2% chance to create a new obstacle every frame
+    if random.randint(0, 200) < 3 & obst_move>0 :  # 1%% chance to create a new benefit every frame
         benefits.append(Benefit(random.randint(0, WIDTH - OBSTACLE_WIDTH), -OBSTACLE_HEIGHT, OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
     
     for benefit in benefits:

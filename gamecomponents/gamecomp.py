@@ -40,6 +40,7 @@ class Obstacle:
         return (square.x < self.x + self.width and square.x + square.size > self.x and
                 square.y < self.y + self.height and square.y + square.size > self.y)
 
+# Coin benefit class
 class Benefit(Obstacle):
     def __init__(self, x, y, width, height):
         super().__init__(x, y, width, height,1)
